@@ -52,7 +52,7 @@ public class KinectOverlayer : MonoBehaviour
             Debug.Log("Placing object.");
             PlaceObject();
         }
-        else if(hit.collider != null && selectedObject == null)
+        else if(hit.collider != null && selectedObject == null && hit.collider.CompareTag("Shape"))
         {
             PickObject(hit.collider.gameObject);
         }
@@ -64,16 +64,8 @@ public class KinectOverlayer : MonoBehaviour
         {
             debugText.text = transform.position.ToString();
             //selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, transform.position, Time.deltaTime * 5f);
-            if(selectedObject.transform.position == transform.position)
-            {
-                soRB.velocity = Vector2.zero;
-            }
-
-            if (soRB.velocity == Vector2.zero)
-            {
-                newPos = (transform.position - selectedObject.transform.position);
-                soRB.velocity = newPos;
-            }
+            newPos = (transform.position - selectedObject.transform.position);
+            soRB.velocity = newPos * 20f;
         }
     }
 }
