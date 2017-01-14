@@ -4,38 +4,29 @@ using UnityEngine.UI;
 
 public class ScoreScript : MonoBehaviour { 
     public int points;
+    public GameObject sparks;
     private static int score = 0;
     static Text scoreText;
     bool scored;
 
 	void Start () {
-        score = 0;
         GameObject scoreObj = GameObject.Find("Score");
         scoreText = scoreObj.GetComponent<Text>();
+        score += points;
+        scoreText.text = score.ToString();
 	}
 	
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (!scored)
-        {
-            ScoreScript.score += points;
-            scored = true;
-            scoreText.text = score.ToString();
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (scored)
-        {
-            ScoreScript.score -= points;
-            scored = false;
-            scoreText.text = score.ToString();
-        }
-    }
-
     public void AddScore(int score)
     {
         ScoreScript.score += score;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Shape"))
+        {
+            Instantiate(sparks, this.transform.position, Quaternion.identity);
+            Debug.Log("SPARK!");
+        }
     }
 }
