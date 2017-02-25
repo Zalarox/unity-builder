@@ -14,6 +14,7 @@ public class KinectOverlayer : MonoBehaviour
 
     public void SelectObject(GameObject obj)
     {
+        transform.position = new Vector3(0, 4, 0);
         selectedObject = Instantiate(obj, transform.position, Quaternion.identity) as GameObject;
         soSpriteRenderer = selectedObject.GetComponent<SpriteRenderer>();
         soSpriteRenderer.color = Color.red;
